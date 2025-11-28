@@ -26,7 +26,6 @@ Heartly is a secure, production-grade healthcare platform that connects patients
 
 - 🔍 **Intelligent Matching**: AI-powered doctor recommendations based on symptoms
 - 🏥 **Comprehensive Network**: Search across specialties, locations, and availability
-- 🔒 **Secure & Compliant**: HIPAA/GDPR compliant with end-to-end encryption
 - 📱 **Mobile-First**: Native iOS and Android apps for patients and doctors
 - ⚡ **Real-Time Updates**: Instant notifications for appointments and reminders
 - 📊 **Analytics Dashboard**: Insights for healthcare providers and administrators
@@ -354,21 +353,9 @@ GET /health/dependencies
 - ✅ Secrets stored in environment variables
 - ✅ Regular dependency audits with `npm audit`
 
-### Compliance
 
-- **HIPAA**: Encrypted data storage, audit logging, access controls
-- **GDPR**: Data portability, right to erasure, consent management
-- **SOC 2**: Security controls and monitoring (in progress)
 
----
 
-## 📚 Documentation
-
-- **API Documentation**: [docs/api/README.md](docs/api/README.md)
-- **Architecture Decisions**: [docs/architecture/](docs/architecture/)
-- **Deployment Runbooks**: [docs/runbooks/](docs/runbooks/)
-- **Contributing Guide**: [CONTRIBUTING.md](CONTRIBUTING.md)
-- **Code of Conduct**: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 
 ### GraphQL Schema
 
@@ -474,9 +461,9 @@ in the Software without restriction...
 
 ## 🗺️ Roadmap
 
-- [x] Core appointment booking system
-- [x] Mobile apps (iOS & Android)
-- [x] Real-time notifications
+- [ ]  Core appointment booking system
+- [ ] Mobile apps (iOS & Android)
+- [ ] Real-time notifications
 - [ ] AI-powered symptom checker
 - [ ] Video consultation feature
 - [ ] Prescription management
