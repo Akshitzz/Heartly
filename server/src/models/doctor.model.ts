@@ -1,6 +1,6 @@
 import { model } from "mongoose";
 import { Schema } from "mongoose";
-import { DoctorI } from "../types/types";
+import { DoctorI } from "../types/types.js";
 
 const DoctorSchema =new Schema<DoctorI>(
     {

@@ -1,6 +1,6 @@
 import  { model } from "mongoose";
 import { Schema } from "mongoose";
-import { HospitalI } from "../types/types";
+import { HospitalI } from "../types/types.js";
 
 const HospitalSchema = new Schema<HospitalI>(
     {
