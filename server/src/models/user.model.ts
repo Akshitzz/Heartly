@@ -22,6 +22,7 @@ const UserSchema = new Schema<UserI>(
             required:true
         },
         role:{
+            type:String,
             enum:["admin","patient"],
             default:"patient"
         }
