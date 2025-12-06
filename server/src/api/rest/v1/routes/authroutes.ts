@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { login, register } from "../controllers/authcontroller.js";
+import { login, register } from "../api/rest/v1/controllers/authcontroller.js";
 
 
 const authrouter = Router();

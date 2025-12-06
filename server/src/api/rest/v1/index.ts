@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import type { Request,Response } from "express";
-import ConnectDb from "./config/db.js";
+import ConnectDb from "../../../config/db.js";
 import helmet from "helmet";
 import morgan from "morgan";
 import cors from "cors"
@@ -16,7 +16,7 @@ const PORT =3000;
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(cors({
-    origin:"http://192.168.1.4",
+    origin:"*",
     credentials:true,
 }))
 app.use(express.json());

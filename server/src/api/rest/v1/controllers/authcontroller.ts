@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
-import User from "../models/user.model.js";
+import User from "../../../../models/user.model.js";
 import bcrypt from "bcrypt";
 import rateLimit from "express-rate-limit";
 

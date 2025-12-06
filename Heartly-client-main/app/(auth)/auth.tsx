@@ -23,11 +23,21 @@ export default function Login() {
         className="border border-white p-3 mb-4 rounded-lg text-white"
       />
 
-      <TouchableOpacity
+      <View className="flex gap-2">
+        <TouchableOpacity
         className="bg-[#ff4d6d] p-4 rounded-lg items-center"
         onPress={handleLogin}>
         <Text className="text-white">Login</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        className="bg-[#ff4d6d] pb-2 rounded-lg items-center"
+        onPress={()=>router.push("/register")}>
+          <Text className="text-center text-gray-300 mt-2">
+            Don't have an account? {" "}
+        <Text className="text-white">Register</Text>
+        </Text>
+      </TouchableOpacity>
+      </View>
     </View>
   );
 }
