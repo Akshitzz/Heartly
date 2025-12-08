@@ -1,5 +1,35 @@
+import mongoose from "mongoose";
 import { Document } from "mongodb";
 import { Types } from "mongoose";
+
+export interface IPatient extends Document {
+  userId: mongoose.Types.ObjectId;
+  dateOfBirth: Date;
+  gender: 'male' | 'female' | 'other';
+  bloodGroup?: string;
+  allergies: string[];
+  chronicConditions: string[];
+  emergencyContact: {
+    name: string;
+    relationship: string;
+    phoneNumber: string;
+  };
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+  insurance?: {
+    provider: string;
+    policyNumber: string;
+    validUntil: Date;
+  };
+  medicalHistory: mongoose.Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export interface UserI extends Document {
  name: string;
