@@ -104,31 +104,9 @@ export class AuthController {
     }
   };
 
-  verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { token } = req.params;
 
-      await this.authService.verifyEmail(token);
 
-      logger.info('Email verified successfully');
 
-      return ApiResponse.success(res, null, 'Email verified successfully');
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  resendVerification = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { email } = req.body;
-
-      await this.authService.resendVerificationEmail(email);
-
-      return ApiResponse.success(res, null, 'Verification email sent');
-    } catch (error) {
-      next(error);
-    }
-  };
 
   changePassword = async (req: Request, res: Response, next: NextFunction) => {
     try {

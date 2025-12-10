@@ -1,7 +1,7 @@
 
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
-import  User  from '@/models/user.model.js';
+import User from '@/models/user.model.js';
 import { JWTUtil } from '@/utils/jwt';
 
 // import { EmailService } from './email.service';
@@ -11,7 +11,7 @@ import { logger } from '@/utils/logger';
 import { RedisClient } from '@/cache/redis-client';
 
 export class AuthService {
-//   private emailService: EmailService;
+  //   private emailService: EmailService;
   private redisClient: RedisClient;
 
   constructor() {
@@ -37,28 +37,26 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(data.password, 12);
 
     // Generate email verification token
-    const verificationToken = crypto.randomBytes(32).toString('hex');
-    const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+    // const verificationToken = crypto.randomBytes(32).toString('hex');
+    // const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
     // Create user
     const user = await User.create({
       ...data,
       password: hashedPassword,
-      emailVerificationToken: verificationToken,
-      emailVerificationExpiry: verificationTokenExpiry,
-      isEmailVerified: false
+      isEmailVerified: true
     });
 
     // Send verification email
     // await this.emailService.sendVerificationEmail(user.email, verificationToken);
 
     // Generate tokens
-    const accessToken = JWTUtil.generateAccessToken(user.id, user.role);
-    const refreshToken = JWTUtil.generateRefreshToken(user.id);
+    const accessToken = JWTUtil.generateAccessToken(user._id.toString(), user.role);
+    const refreshToken = JWTUtil.generateRefreshToken(user._id.toString());
 
     // Store refresh token in Redis
     await this.redisClient.set(
-      `refresh_token:${user.id}`,
+      `refresh_token:${user._id.toString()}`,
       refreshToken,
       7 * 24 * 60 * 60 // 7 days
     );
@@ -91,9 +89,9 @@ export class AuthService {
     }
 
     // Check if email is verified
-    if (!user.isEmailVerified) {
-      throw new AppError('Please verify your email before logging in', 403);
-    }
+    // if (!user.isEmailVerified) {
+    //   throw new AppError('Please verify your email before logging in', 403);
+    // }
 
     // Check if account is active
     if (user.status !== 'active') {
@@ -105,12 +103,12 @@ export class AuthService {
     await user.save();
 
     // Generate tokens
-    const accessToken = JWTUtil.generateAccessToken(user.id, user.role);
-    const refreshToken = JWTUtil.generateRefreshToken(user.id);
+    const accessToken = JWTUtil.generateAccessToken(user._id.toString(), user.role);
+    const refreshToken = JWTUtil.generateRefreshToken(user._id.toString());
 
     // Store refresh token
     await this.redisClient.set(
-      `refresh_token:${user.id}`,
+      `refresh_token:${user._id.toString()}`,
       refreshToken,
       7 * 24 * 60 * 60
     );
@@ -131,10 +129,10 @@ export class AuthService {
       const decoded = JWTUtil.verifyRefreshToken(refreshToken);
 
       // Check if refresh token exists in Redis
-    //   const storedToken = await this.redisClient.get(`refresh_token:${decoded.userId}`);
-    //   if (!storedToken || storedToken !== refreshToken) {
-    //     throw new AppError('Invalid refresh token', 401);
-    //   }
+      //   const storedToken = await this.redisClient.get(`refresh_token:${decoded.userId}`);
+      //   if (!storedToken || storedToken !== refreshToken) {
+      //     throw new AppError('Invalid refresh token', 401);
+      //   }
 
       const user = await User.findById(decoded.userId);
       if (!user) {
@@ -142,7 +140,7 @@ export class AuthService {
       }
 
       // Generate new access token
-      const newAccessToken = JWTUtil.generateAccessToken(user.id, user.role);
+      const newAccessToken = JWTUtil.generateAccessToken(user._id.toString(), user.role);
 
       return {
         accessToken: newAccessToken
@@ -205,46 +203,46 @@ export class AuthService {
     await user.save();
 
     // Invalidate all refresh tokens
-    await this.redisClient.delete(`refresh_token:${user.id}`);
+    await this.redisClient.delete(`refresh_token:${user._id.toString()}`);
   }
 
-  async verifyEmail(token: string) {
-    const user = await User.findOne({
-      emailVerificationToken: token,
-      emailVerificationExpiry: { $gt: new Date() }
-    });
+  // async verifyEmail(token: string) {
+  //   const user = await User.findOne({
+  //     emailVerificationToken: token,
+  //     emailVerificationExpiry: { $gt: new Date() }
+  //   });
 
-    if (!user) {
-      throw new AppError('Invalid or expired verification token', 400);
-    }
+  //   if (!user) {
+  //     throw new AppError('Invalid or expired verification token', 400);
+  //   }
 
-    user.isEmailVerified = true;
-    user.emailVerificationToken = undefined;
-    user.emailVerificationExpiry = undefined;
-    await user.save();
-  }
+  //   user.isEmailVerified = true;
+  //   user.emailVerificationToken = undefined;
+  //   user.emailVerificationExpiry = undefined;
+  //   await user.save();
+  // }
 
-  async resendVerificationEmail(email: string) {
-    const user = await User.findOne({ email });
+  // async resendVerificationEmail(email: string) {
+  //   const user = await User.findOne({ email });
 
-    if (!user) {
-      throw new AppError('User not found', 404);
-    }
+  //   if (!user) {
+  //     throw new AppError('User not found', 404);
+  //   }
 
-    if (user.isEmailVerified) {
-      throw new AppError('Email already verified', 400);
-    }
+  //   if (user.isEmailVerified) {
+  //     throw new AppError('Email already verified', 400);
+  //   }
 
-    // Generate new verification token
-    const verificationToken = crypto.randomBytes(32).toString('hex');
-    const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  //   // Generate new verification token
+  //   const verificationToken = crypto.randomBytes(32).toString('hex');
+  //   const verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
-    user.emailVerificationToken = verificationToken;
-    user.emailVerificationExpiry = verificationTokenExpiry;
-    await user.save();
+  //   user.emailVerificationToken = verificationToken;
+  //   user.emailVerificationExpiry = verificationTokenExpiry;
+  //   await user.save();
 
-    // await this.emailService.sendVerificationEmail(user.email, verificationToken);
-  }
+  //   // await this.emailService.sendVerificationEmail(user.email, verificationToken);
+  // }
 
   async changePassword(userId: string, currentPassword: string, newPassword: string) {
     const user = await User.findById(userId).select('+password');
@@ -266,7 +264,7 @@ export class AuthService {
     await user.save();
 
     // Invalidate all refresh tokens
-    await this.redisClient.delete(`refresh_token:${user.id}`);
+    await this.redisClient.delete(`refresh_token:${user._id.toString()}`);
   }
 
   async getCurrentUser(userId: string) {

@@ -18,16 +18,21 @@ router.get('/profile',
     patientController.getProfile
 );
 
-router.patch('/profile'
-    ,RoleMiddleWares(['patient']),
-    patientController.getProfile
+router.post('/profile',
+    RoleMiddleWares(['patient']),
+    patientController.updateProfile
+);
+
+router.patch('/profile',
+    RoleMiddleWares(['patient']),
+    patientController.updateProfile
 );
 
 
-// router.get("/medical-history",
-//     RoleMiddleWares(['patient']),
-//     patientController.getMedicalHistory
-// );
+router.get("/medical-history",
+    RoleMiddleWares(['patient']),
+    patientController.getMedicalHistory
+);
 
 
-export default router ; 
+export default router; 

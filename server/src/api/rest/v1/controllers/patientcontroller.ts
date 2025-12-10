@@ -32,15 +32,15 @@ private patientService :PatientService;
         }
     }
 
-//    getMedicalHistory = async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       const userId = req.user!.id;
-//       const history = await this.patientService.getMedicalHistory(userId);
-//       return ApiResponse.success(res, history);
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
+   getMedicalHistory = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId = req.user!.id;
+      const history = await this.patientService.getMedicalHistory(userId);
+      return ApiResponse.success(res, history);
+    } catch (error) {
+      next(error);
+    }
+  };
 } 
 
 
