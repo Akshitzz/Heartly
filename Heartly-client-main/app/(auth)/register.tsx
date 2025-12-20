@@ -1,87 +1,129 @@
-import api from "@/lib/api";
-import { router } from "expo-router";
-import { useState } from "react"
-import { View ,Text, TextInput,Alert, TouchableOpacity} from "react-native"
-import * as SecureStore from "expo-secure-store"
+import { ArrowRight, ChevronLeft, HeartPulse, Lock, Mail, Phone, User } from 'lucide-react-native';
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Register(){
-    const [name,setName]=useState("");
-    const [email,setEmail]=useState("");
-    const [phoneno,setPhoneNo]=useState("");
-    const [Password,setPassword]=useState("");
-    const [loading,setLoading] = useState(false);
+import { router } from 'expo-router';
 
-const handleRegister=async()=>{
-if(!name || !email || !phoneno || Password ){
-    Alert.alert("Error","All fields are required");
-    return;
-}
-    try{
-        setLoading(true);
-        const res = await api.post("/auth/register",{
-            name,email,phoneno,Password
-        })
-       await SecureStore.setItemAsync("token", res.data.token);
+export default function Register() {
+    const [showPassword, setShowPassword] = useState(false);
 
-    router.replace("/(tabs)");
-    }catch(err:any){
-             console.log("Register Error:", err.response?.data || err.message);
-             Alert.alert(
-      "Registration Failed",
-      err.response?.data?.message || "Something went wrong"
-             );
-    }finally{
-            setLoading(false);
-    }
-}
-
-return (
-        <View className="flex-1 p-5 justify-center bg-black">
-            <Text className="text-2xl font-bold mb-8 text-white">Create a Hearlty Account</Text>
-            <TextInput
-            placeholder="Full name"
-            value={name}
-            onChangeText={setName}
-            placeholderTextColor="#fff"
-            className="border border-white  p-3 mb-4 rounded-lg text-white"
+    return (
+        <SafeAreaView className="flex-1 bg-[#101922]">
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                className="flex-1"
             >
-            </TextInput>
-            <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            placeholderTextColor="#fff"
-            className="border border-white  p-3 mb-4 rounded-lg text-white"
-            >
-                </TextInput>
-            <TextInput
-            placeholder="Phone"
-            value={phoneno}
-            onChangeText={setPhoneNo}
-            placeholderTextColor="#fff"
-            className="border border-white  p-3 mb-4 rounded-lg text-white"
-            >
-                </TextInput>
-            <TextInput
-            placeholder="Password"
-            value={Password}
-            onChangeText={setPassword}
-            placeholderTextColor="#fff"
-            className="border border-white  p-3 mb-4 rounded-lg text-white"
-            >
-            </TextInput>
-                    
-                    <Text className="text-white text-lg">
-          {loading ? "Creating..." : "Register"}
-        </Text>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-6">
 
-            <TouchableOpacity onPress={()=>router.push("/auth")}>
-                <Text className="text-center text-gray-300 mt-6">Already have an account ?{" "}
-                    <Text className="text-[#ff4d6d] font-bold">Login</Text>
-                </Text>
-            </TouchableOpacity>
+                    {/* Back Button & Logo */}
+                    <View className="flex-row items-center justify-between pt-6 pb-6">
+                        <TouchableOpacity onPress={() => router.back()} className="w-10 h-10 items-center justify-center rounded-full bg-slate-800">
+                            <ChevronLeft color="white" size={24} />
+                        </TouchableOpacity>
+                        <View className="flex-row items-center gap-2">
+                            <View className="w-8 h-8 items-center justify-center rounded-lg bg-[#137fec]/20">
+                                <HeartPulse color="#137fec" size={18} />
+                            </View>
+                            <Text className="text-lg font-bold text-white">CampusHealth</Text>
+                        </View>
+                        <View className="w-10" />
+                    </View>
 
-        </View>
-)
+                    {/* Headline */}
+                    <View className="pb-8">
+                        <Text className="text-3xl font-bold text-white tracking-tight">
+                            Create Account
+                        </Text>
+                        <Text className="mt-2 text-base text-slate-400">
+                            Join your campus health community today.
+                        </Text>
+                    </View>
 
+                    {/* Registration Form */}
+                    <View className="gap-5">
+
+                        {/* Full Name */}
+                        <View className="gap-2">
+                            <Text className="text-sm font-medium text-slate-300">Full Name</Text>
+                            <View className="flex-row items-center h-14 px-4 bg-[#1c242d] border border-slate-700 rounded-xl">
+                                <User color="#64748b" size={20} className="mr-3" />
+                                <TextInput
+                                    className="flex-1 text-white text-base"
+                                    placeholder="John Doe"
+                                    placeholderTextColor="#94a3b8"
+                                />
+                            </View>
+                        </View>
+
+                        {/* University Email */}
+                        <View className="gap-2">
+                            <Text className="text-sm font-medium text-slate-300">University Email</Text>
+                            <View className="flex-row items-center h-14 px-4 bg-[#1c242d] border border-slate-700 rounded-xl">
+                                <Mail color="#64748b" size={20} className="mr-3" />
+                                <TextInput
+                                    className="flex-1 text-white text-base"
+                                    placeholder="student@university.edu"
+                                    placeholderTextColor="#94a3b8"
+                                    keyboardType="email-address"
+                                />
+                            </View>
+                        </View>
+
+                        {/* Phone Number */}
+                        <View className="gap-2">
+                            <Text className="text-sm font-medium text-slate-300">Phone Number</Text>
+                            <View className="flex-row items-center h-14 px-4 bg-[#1c242d] border border-slate-700 rounded-xl">
+                                <Phone color="#64748b" size={20} className="mr-3" />
+                                <TextInput
+                                    className="flex-1 text-white text-base"
+                                    placeholder="+1 (555) 000-0000"
+                                    placeholderTextColor="#94a3b8"
+                                    keyboardType="phone-pad"
+                                />
+                            </View>
+                        </View>
+
+                        {/* Password */}
+                        <View className="gap-2">
+                            <Text className="text-sm font-medium text-slate-300">Create Password</Text>
+                            <View className="flex-row items-center h-14 px-4 bg-[#1c242d] border border-slate-700 rounded-xl">
+                                <Lock color="#64748b" size={20} className="mr-3" />
+                                <TextInput
+                                    className="flex-1 text-white text-base"
+                                    placeholder="••••••••"
+                                    placeholderTextColor="#94a3b8"
+                                    secureTextEntry={!showPassword}
+                                />
+                            </View>
+                        </View>
+
+                        {/* Terms of Service */}
+                        <Text className="text-xs text-slate-500 leading-5">
+                            By registering, you agree to our
+                            <Text className="text-[#137fec]" onPress={() => router.push('/profile/legal?tab=terms')}> Terms of Service </Text>
+                            and
+                            <Text className="text-[#137fec]" onPress={() => router.push('/profile/legal?tab=privacy')}> Privacy Policy</Text>.
+                        </Text>
+
+                        {/* Register Button */}
+                        <TouchableOpacity onPress={() => router.push('/(auth)/onboarding')} className="w-full h-14 bg-[#137fec] rounded-xl flex-row items-center justify-center gap-2 mt-2 shadow-lg shadow-blue-500/20">
+                            <Text className="text-white font-bold text-base">Create Account</Text>
+                            <ArrowRight color="white" size={20} />
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* Footer */}
+                    <View className="mt-auto pt-10 pb-8 items-center">
+                        <TouchableOpacity onPress={() => router.push('/(auth)/auth')}>
+                            <Text className="text-sm text-slate-400">
+                                Already have an account? <Text className="font-bold text-[#137fec]">Log In</Text>
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
+    );
 }
