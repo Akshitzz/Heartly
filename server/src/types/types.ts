@@ -63,10 +63,9 @@ export interface DoctorI extends Document {
   name: string,
   email: string,
   phone: string,
-  experience :Number,
-  availableDays:String[]
   specialization: string,
-  availabledays: string[],
+  availableDays: string[],
+  experience: number,
   hospital: Types.ObjectId;
 }
 export interface IAppointment extends Document {
@@ -111,7 +110,7 @@ export interface IReview extends Document {
   patientId: mongoose.Types.ObjectId;
   doctorId: mongoose.Types.ObjectId;
   rating: number;
-  comment?: string;
+  comment: string;
   isVerified: boolean;
   createdAt: Date;
   updatedAt: Date;

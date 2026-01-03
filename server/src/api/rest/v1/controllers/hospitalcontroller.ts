@@ -1,6 +1,6 @@
 import { Request,Response,NextFunction } from "express";
-import { HospitalService } from "@/services/hospitalservice";
-import { ApiResponse } from "@/utils/response";
+import { HospitalService } from "../../../../services/hospitalservice.js";
+import { ApiResponse } from "../../../../utils/response.js";
 
 
 export class HospitalController {

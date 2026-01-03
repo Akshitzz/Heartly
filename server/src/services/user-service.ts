@@ -1,5 +1,5 @@
-import User from "@/models/user.model";
-import { AppError } from "@/utils/error-handler";
+import User from "../models/user.model.js";
+import { AppError } from "../utils/error-handler.js";
 
 
 export class UserService {

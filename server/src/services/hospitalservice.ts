@@ -1,6 +1,6 @@
-import { AppError } from "@/utils/error-handler";
-import Hospital from '@/models/hospital.model';
-import Doctor from '@/models/doctor.model';
+import { AppError } from "../utils/error-handler.js";
+import Hospital from '../models/hospital.model.js';
+import Doctor from '../models/doctor.model.js';
 
 
 export class HospitalService {

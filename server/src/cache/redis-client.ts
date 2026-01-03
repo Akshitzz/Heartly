@@ -1,35 +1,36 @@
-import { logger } from "@/utils/logger";
+import { logger } from "../utils/logger.js";
 import { createClient } from "redis";
 
 
 export class RedisClient {
-    private static instance :RedisClient;
-    private client  :any ; 
+  private static instance: RedisClient;
+  private client: any;
 
 
-        constructor(){
-            this.client  = createClient({
-                socket :{
-                    host : process.env.REDIS_HOST || "localhost",
-                    port : parseInt(process.env.REDIS_PORT || '6379')
-                },
-                password  : process.env.REDIS_PASSWORD
-            })
-            this.client.on('error',(err:any)=>logger.error("Redis Error",err))
-            this.client.on('connect',()=>logger.info('Redis Connected'));
-            this.connect();
-        };
+  constructor() {
+    this.client = createClient({
+      username: process.env.REDIS_USERNAME || 'default',
+      socket: {
+        host: process.env.REDIS_HOST || "localhost",
+        port: parseInt(process.env.REDIS_PORT || '6379')
+      },
+      password: process.env.REDIS_PASSWORD
+    })
+    this.client.on('error', (err: any) => logger.error("Redis Error", err))
+    this.client.on('connect', () => logger.info('Redis Connected'));
+    this.connect();
+  };
 
-         static getInstance() :RedisClient {
-                if(!RedisClient.instance){
-                    RedisClient.instance = new RedisClient();
-                }
-                return RedisClient.instance;
-            }
-             private async connect() {
+  static getInstance(): RedisClient {
+    if (!RedisClient.instance) {
+      RedisClient.instance = new RedisClient();
+    }
+    return RedisClient.instance;
+  }
+  private async connect() {
     await this.client.connect();
   }
-    async set(key: string, value: string, ttl?: number): Promise<void> {
+  async set(key: string, value: string, ttl?: number): Promise<void> {
     if (ttl) {
       await this.client.setEx(key, ttl, value);
     } else {
@@ -37,7 +38,7 @@ export class RedisClient {
     }
   }
 
-  async get(key:string) :Promise<any>{
+  async get(key: string): Promise<any> {
     await this.client.get(key);
   }
 

@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IReview } from "@/types/types";
+import { IReview } from "../types/types.js";
 import mongoose from "mongoose";
 const reviewSchema = new Schema<IReview>(
   {

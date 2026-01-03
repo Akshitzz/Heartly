@@ -1,5 +1,5 @@
-import { AppError, HandleError } from "@/utils/error-handler";
-import { logger } from "@/utils/logger";
+import { AppError, HandleError } from "../utils/error-handler.js";
+import { logger } from "../utils/logger.js";
 export const errorMiddleware = (error, req, res, next) => {
     logger.error('Error', {
         message: error.message,

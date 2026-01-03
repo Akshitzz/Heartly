@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
-import { logger } from "@/utils/logger";
-import Appointment from "@/models/apointment.model";
-import { UserI, DoctorI, HospitalI } from "@/types/types";
+import { logger } from "../utils/logger.js";
+import Appointment from "../models/apointment.model.js";
+import { UserI, DoctorI, HospitalI } from "../types/types.js";
 
 export class EmailService {
   private transporter: any;

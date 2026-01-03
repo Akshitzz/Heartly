@@ -1,5 +1,5 @@
 import rateLimit from "express-rate-limit";
-import { RedisClient } from "@/cache/redis-client";
+import { RedisClient } from "../cache/redis-client.js";
 import { RedisStore } from "rate-limit-redis";
 
 

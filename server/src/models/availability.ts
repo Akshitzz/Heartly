@@ -1,4 +1,4 @@
-import { IAvailability } from "@/types/types";
+import { IAvailability } from "../types/types.js";
 import mongoose, { Schema } from "mongoose";
 const availabilitySchema = new Schema<IAvailability>(
     {

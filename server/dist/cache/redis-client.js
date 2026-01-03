@@ -1,4 +1,4 @@
-import { logger } from "@/utils/logger";
+import { logger } from "../utils/logger.js";
 import { createClient } from "redis";
 export class RedisClient {
     constructor() {
@@ -30,6 +30,9 @@ export class RedisClient {
         else {
             await this.client.set(key, value);
         }
+    }
+    async get(key) {
+        await this.client.get(key);
     }
     async delete(key) {
         await this.client.del(key);

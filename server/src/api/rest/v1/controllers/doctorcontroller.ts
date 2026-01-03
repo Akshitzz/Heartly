@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { ApiResponse } from "@/utils/response";
-import { DoctorService } from "@/services/doctorservice";
+import { ApiResponse } from "../../../../utils/response.js";
+import { DoctorService } from "../../../../services/doctorservice.js";
 
 
 export class DoctorController {

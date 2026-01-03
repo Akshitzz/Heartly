@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { PatientController } from "../controllers/patientcontroller";
-import { authMiddleWare } from "@/middleware/auth-middleware";
-import { RoleMiddleWares } from "@/middleware/role-middleware";
+import { PatientController } from "../controllers/patientcontroller.js";
+import { authMiddleWare } from "../../../../middleware/auth-middleware.js";
+import { RoleMiddleWares } from "../../../../middleware/role-middleware.js";
 
 
 

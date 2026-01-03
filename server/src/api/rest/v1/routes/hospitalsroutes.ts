@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { HospitalController } from '../controllers/hospitalcontroller';
-import { validateRequest } from '@/middleware/validation-middleware';
-import { hospitalValidator } from '@/validators/hospital.validator';
-import { authMiddleWare } from '@/middleware/auth-middleware';
-import { RoleMiddleWares } from '@/middleware/role-middleware';
+import { HospitalController } from '../controllers/hospitalcontroller.js';
+import { validateRequest } from '../../../../middleware/validation-middleware.js';
+import { hospitalValidator } from '../../../../validators/hospital.validator.js';
+import { authMiddleWare } from '../../../../middleware/auth-middleware.js';
+import { RoleMiddleWares } from '../../../../middleware/role-middleware.js';
 const router = Router();
 const hospitalController = new HospitalController();
 

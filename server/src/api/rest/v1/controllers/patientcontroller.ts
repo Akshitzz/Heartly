@@ -1,5 +1,5 @@
-import { PatientService } from "@/services/patient-service";
-import { ApiResponse } from "@/utils/response";
+import { PatientService } from "../../../../services/patient-service.js";
+import { ApiResponse } from "../../../../utils/response.js";
 import { Request,Response,NextFunction } from "express";
 
 

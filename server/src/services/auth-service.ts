@@ -1,14 +1,14 @@
 
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
-import User from '@/models/user.model.js';
-import { JWTUtil } from '@/utils/jwt';
+import User from '../models/user.model.js';
+import { JWTUtil } from '../utils/jwt.js';
 
 // import { EmailService } from './email.service';
 
-import { AppError } from '@/utils/error-handler';
-import { logger } from '@/utils/logger';
-import { RedisClient } from '@/cache/redis-client';
+import { AppError } from '../utils/error-handler.js';
+import { logger } from '../utils/logger.js';
+import { RedisClient } from '../cache/redis-client.js';
 
 export class AuthService {
   //   private emailService: EmailService;

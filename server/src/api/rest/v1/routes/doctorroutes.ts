@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { DoctorController } from "../controllers/doctorcontroller";
-import { validateRequest } from "@/middleware/validation-middleware";
-import { authMiddleWare } from "@/middleware/auth-middleware";
-import { RoleMiddleWares } from "@/middleware/role-middleware";
-import { doctorValidator } from "@/validators/doctor.validator";
+import { DoctorController } from "../controllers/doctorcontroller.js";
+import { validateRequest } from "../../../../middleware/validation-middleware.js";
+import { authMiddleWare } from "../../../../middleware/auth-middleware.js";
+import { RoleMiddleWares } from "../../../../middleware/role-middleware.js";
+import { doctorValidator } from "../../../../validators/doctor.validator.js";
 
 const router = Router();
 

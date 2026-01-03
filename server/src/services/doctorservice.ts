@@ -1,8 +1,8 @@
-import Doctor from "@/models/doctor.model";
-import { Availability } from "@/models/availability";
-import { CacheService } from "@/cache/cache.service";
-import { AppError } from "@/utils/error-handler";
-import { Review } from "@/models/review";
+import Doctor from "../models/doctor.model.js";
+import { Availability } from "../models/availability.js";
+import { CacheService } from "../cache/cache.service.js";
+import { AppError } from "../utils/error-handler.js";
+import { Review } from "../models/review.js";
 
 
 export class DoctorService {

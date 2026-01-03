@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { ApiResponse } from '@/utils/response';
-import { logger } from '@/utils/logger';
-import { AuthService } from '@/services/auth-service';
+import { ApiResponse } from '../../../../utils/response.js';
+import { logger } from '../../../../utils/logger.js';
+import { AuthService } from '../../../../services/auth-service.js';
 
 export class AuthController {
   private authService: AuthService;

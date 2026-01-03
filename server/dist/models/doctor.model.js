@@ -20,10 +20,12 @@ const DoctorSchema = new Schema({
         type: String,
         required: true
     },
-    experience: { type: Number,
+    experience: {
+        type: Number,
         required: true
     },
-    availableDays: { type: [String],
+    availableDays: {
+        type: [String],
         default: []
     },
 });

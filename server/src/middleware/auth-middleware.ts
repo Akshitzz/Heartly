@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { AppError } from "../utils/error-handler";
-import { JWTUtil } from "../utils/jwt";
-import User from '@/models/user.model';
+import { AppError } from "../utils/error-handler.js";
+import { JWTUtil } from "../utils/jwt.js";
+import User from '../models/user.model.js';
 
 declare global {
     namespace Express {

@@ -1,6 +1,6 @@
-import { Patient } from "@/models/patient.model"
-import { AppError } from "@/utils/error-handler"
-import { MedicalHistory } from "@/models/medicalhistory.model";
+import { Patient } from "../models/patient.model.js";
+import { AppError } from "../utils/error-handler.js";
+import { MedicalHistory } from "../models/medicalhistory.model.js";
 
 
 

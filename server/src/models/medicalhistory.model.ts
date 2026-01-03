@@ -1,4 +1,4 @@
-import { MedicalHistorySchemaI } from "@/types/types";
+import { MedicalHistorySchemaI } from "../types/types.js";
 import mongoose, { Schema } from "mongoose";
 
 
@@ -16,7 +16,7 @@ const MedicalHistorySchema= new Schema<MedicalHistorySchemaI>({
     },
     doctorId:{
         type:mongoose.Types.ObjectId,
-        ref:"Dcotor",
+        ref:"Doctor",
         required:true
     },
     date: {

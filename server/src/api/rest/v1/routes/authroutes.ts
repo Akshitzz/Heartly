@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { rateLimiter } from '@/middleware/rate-limit.middleware';
-import { AuthController } from '../controllers/authcontroller';
-import { validateRequest } from '@/middleware/validation-middleware';
-import { authValidator } from '@/validators/auth-validator';
-import { authMiddleWare } from '@/middleware/auth-middleware';
+import { rateLimiter } from '../../../../middleware/rate-limit.middleware.js';
+import { AuthController } from '../controllers/authcontroller.js';
+import { validateRequest } from '../../../../middleware/validation-middleware.js';
+import { authValidator } from '../../../../validators/auth-validator.js';
+import { authMiddleWare } from '../../../../middleware/auth-middleware.js';
 
 const router = Router();
 const authController = new AuthController();
@@ -36,7 +36,15 @@ router.post('/reset-password/:token',
   authController.resetPassword
 );
 
+// router.post('/verify-email/:token', 
+//   authController.verifyEmail
+// );
 
+// router.post('/resend-verification', 
+//   rateLimiter({ max: 3, windowMs: 60 * 60 * 1000 }),
+//   validateRequest(authValidator.resendVerification), 
+//   authController.resendVerification
+// );
 
 // Protected routes - signed in user only 
 router.post('/logout',

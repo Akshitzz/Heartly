@@ -1,4 +1,4 @@
-import { AppError } from "@/utils/error-handler";
+import { AppError } from "../utils/error-handler.js";
 import { Request,Response,NextFunction } from "express";
 
 export const RoleMiddleWares = (allowedRoles:string[])=>{

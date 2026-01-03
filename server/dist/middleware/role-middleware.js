@@ -1,4 +1,4 @@
-import { AppError } from "@/utils/error-handler";
+import { AppError } from "../utils/error-handler.js";
 export const RoleMiddleWares = (allowedRoles) => {
     return (req, res, next) => {
         if (!req.user) {

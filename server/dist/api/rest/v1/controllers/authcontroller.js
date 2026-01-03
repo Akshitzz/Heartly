@@ -1,97 +1,108 @@
-import jwt from "jsonwebtoken";
-import User from "../../../../models/user.model.js";
-import bcrypt from "bcrypt";
-import rateLimit from "express-rate-limit";
-export const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 5,
-    message: "Too many attempts, please try again later",
-    standardHeaders: true,
-    legacyHeaders: false,
-});
-// Email validation
-const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email) && email.length <= 254;
-};
-const isStrongPassword = (password) => {
-    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return strongPasswordRegex.test(password) && password.length <= 128;
-};
-export const register = async (req, res) => {
-    try {
-        const { email, password, name, phone } = req.body;
-        if (!email || !password || !name || !phone) {
-            return res.status(400).json({ message: "Name, email, password, and phone are required" });
-        }
-        const sanitizedEmail = email.trim().toLowerCase();
-        if (!isValidEmail(sanitizedEmail)) {
-            return res.status(400).json({ message: "Invalid email format" });
-        }
-        if (!isStrongPassword(password)) {
-            return res.status(400).json({
-                message: "Password must be at least 8 characters with uppercase, lowercase, number, and special character"
-            });
-        }
-        const existing = await User.findOne({ email: sanitizedEmail });
-        if (existing) {
-            return res.status(409).json({ message: "User already exists" });
-        }
-        const hashedPassword = await bcrypt.hash(password, 12);
-        await User.create({
-            name: name.trim(),
-            email: sanitizedEmail,
-            password: hashedPassword,
-            phone: phone.trim(),
-        });
-        res.status(201).json({ message: "User created successfully" });
+import { ApiResponse } from '../../../../utils/response.js';
+import { logger } from '../../../../utils/logger.js';
+import { AuthService } from '../../../../services/auth-service.js';
+export class AuthController {
+    constructor() {
+        this.register = async (req, res, next) => {
+            try {
+                const { email, password, firstName, lastName, role, phoneNumber } = req.body;
+                const result = await this.authService.register({
+                    email,
+                    password,
+                    firstName,
+                    lastName,
+                    role,
+                    phoneNumber
+                });
+                logger.info(`User registered successfully: ${email}`);
+                return ApiResponse.created(res, result, 'Registration successful. Please verify your email.');
+            }
+            catch (error) {
+                next(error);
+            }
+        };
+        this.login = async (req, res, next) => {
+            try {
+                const { email, password, deviceInfo } = req.body;
+                const result = await this.authService.login({
+                    email,
+                    password,
+                    deviceInfo,
+                    ipAddress: req.ip
+                });
+                logger.info(`User logged in: ${email}`);
+                return ApiResponse.success(res, result, 'Login successful');
+            }
+            catch (error) {
+                next(error);
+            }
+        };
+        this.refreshToken = async (req, res, next) => {
+            try {
+                const { refreshToken } = req.body;
+                const result = await this.authService.refreshAccessToken(refreshToken);
+                return ApiResponse.success(res, result, 'Token refreshed successfully');
+            }
+            catch (error) {
+                next(error);
+            }
+        };
+        this.logout = async (req, res, next) => {
+            try {
+                const userId = req.user.id;
+                const { refreshToken } = req.body;
+                await this.authService.logout(userId, refreshToken);
+                logger.info(`User logged out: ${userId}`);
+                return ApiResponse.success(res, null, 'Logout successful');
+            }
+            catch (error) {
+                next(error);
+            }
+        };
+        this.forgotPassword = async (req, res, next) => {
+            try {
+                const { email } = req.body;
+                await this.authService.forgotPassword(email);
+                return ApiResponse.success(res, null, 'Password reset email sent');
+            }
+            catch (error) {
+                next(error);
+            }
+        };
+        this.resetPassword = async (req, res, next) => {
+            try {
+                const { token } = req.params;
+                const { password } = req.body;
+                await this.authService.resetPassword(token, password);
+                logger.info('Password reset successful');
+                return ApiResponse.success(res, null, 'Password reset successful');
+            }
+            catch (error) {
+                next(error);
+            }
+        };
+        this.changePassword = async (req, res, next) => {
+            try {
+                const userId = req.user.id;
+                const { currentPassword, newPassword } = req.body;
+                await this.authService.changePassword(userId, currentPassword, newPassword);
+                logger.info(`Password changed for user: ${userId}`);
+                return ApiResponse.success(res, null, 'Password changed successfully');
+            }
+            catch (error) {
+                next(error);
+            }
+        };
+        this.getCurrentUser = async (req, res, next) => {
+            try {
+                const userId = req.user.id;
+                const user = await this.authService.getCurrentUser(userId);
+                return ApiResponse.success(res, user);
+            }
+            catch (error) {
+                next(error);
+            }
+        };
+        this.authService = new AuthService();
     }
-    catch (err) {
-        console.error("Registration error:", err);
-        res.status(500).json({ message: "Registration failed" });
-    }
-};
-export const login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(400).json({ message: "Email and password are required" });
-        }
-        const sanitizedEmail = email.trim().toLowerCase();
-        if (!isValidEmail(sanitizedEmail)) {
-            return res.status(400).json({ message: "Invalid credentials" });
-        }
-        const user = await User.findOne({ email: sanitizedEmail }).select("+password");
-        if (!user) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-        if (!process.env.JWT_SECRET) {
-            throw new Error("JWT_SECRET is not configured");
-        }
-        const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
-            expiresIn: "7d",
-            algorithm: "HS256",
-        });
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000,
-        });
-        res.status(200).json({
-            message: "Login successful",
-            user: {
-                id: user._id,
-                email: user.email,
-            },
-        });
-    }
-    catch (err) {
-        console.error("Login error:", err);
-        res.status(500).json({ message: "Login failed" });
-    }
-};
+}

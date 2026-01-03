@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { IPatient } from '@/types/types';
+import { IPatient } from '../types/types.js';
 const patientSchema = new Schema<IPatient>(
   {
     userId: {
