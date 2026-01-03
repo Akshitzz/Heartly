@@ -1,9 +1,8 @@
-import { ArrowRight, Eye, HeartPulse, Lock, Mail, ScanFace, Siren } from 'lucide-react-native';
-import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { router } from 'expo-router';
+import { ArrowRight, Eye, Lock, Mail, Siren } from 'lucide-react-native';
+import React, { useState } from 'react';
+import { Image, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
   const [loginMethod, setLoginMethod] = useState('Email');
@@ -18,17 +17,17 @@ export default function App() {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-6">
 
           {/* Top Bar with Logo */}
-          <View className="flex-row items-center justify-center pt-10 pb-6 gap-3">
+          <View className="flex-row items-center justify-center pt-10 pb-12 gap-3">
             <View className="w-10 h-10 items-center justify-center rounded-xl bg-[#137fec]/20">
-              <HeartPulse color="#137fec" size={24} />
+              <Image source={require('../../assets/images/mainlogo.jpeg')} className="w-12 h-12 px-2 rounded-full" />
             </View>
-            <Text className="text-xl font-bold tracking-tight text-white">CampusHealth</Text>
+            <Text className="text-xl font-bold tracking-tight text-white">Heartly</Text>
           </View>
 
           {/* Headline & Subhead */}
-          <View className="items-center pb-6">
+          <View className="items-center pb-12">
             <Text className="text-[28px] font-bold leading-tight text-center text-white tracking-tight">
-              Welcome Back, Student
+              Welcome Back
             </Text>
             <Text className="mt-2 text-base text-center text-slate-400">
               Your campus health companion
@@ -36,20 +35,20 @@ export default function App() {
           </View>
 
           {/* Segmented Control (Tabs) */}
-          <View className="flex-row h-12 w-full items-center justify-center rounded-xl bg-[#283039] p-1 mb-6">
+          {/* <View className="flex-row h-12 w-full items-center justify-center rounded-xl bg-[#283039] p-1 mb-6">
             <TouchableOpacity
               onPress={() => setLoginMethod('Email')}
-              className={`flex-1 h-full items-center justify-center rounded-lg ${loginMethod === 'Email' ? 'bg-[#101922]' : ''}`}
+              className={`flex-1 h-full items-center justify-center rounded-lg bg-[#101922]`}
             >
-              <Text className={`font-medium ${loginMethod === 'Email' ? 'text-[#137fec]' : 'text-slate-400'}`}>Email</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              <Text className={`font-medium text-[#137fec]`}>Email</Text>
+            </TouchableOpacity> */}
+          {/* <TouchableOpacity
               onPress={() => setLoginMethod('Phone')}
               className={`flex-1 h-full items-center justify-center rounded-lg ${loginMethod === 'Phone' ? 'bg-[#101922]' : ''}`}
             >
-              <Text className={`font-medium ${loginMethod === 'Phone' ? 'text-[#137fec]' : 'text-slate-400'}`}>Phone / OTP</Text>
-            </TouchableOpacity>
-          </View>
+              <Text className={`font-medium text-[#137fec]`}>Phone / OTP</Text>
+            </TouchableOpacity> */}
+          {/* </View> */}
 
           {/* Login Form */}
           <View className="gap-5">
@@ -60,7 +59,7 @@ export default function App() {
                 <Mail color="#64748b" size={20} className="mr-3" />
                 <TextInput
                   className="flex-1 text-white text-base"
-                  placeholder="student@university.edu"
+                  placeholder="test@gmail.com"
                   placeholderTextColor="#94a3b8"
                   keyboardType="email-address"
                 />
@@ -90,14 +89,16 @@ export default function App() {
             </TouchableOpacity>
 
             {/* Primary Action Button */}
-            <TouchableOpacity className="w-full h-14 bg-[#137fec] rounded-xl flex-row items-center justify-center gap-2 shadow-lg shadow-blue-500/20">
+            <TouchableOpacity
+              onPress={() => router.push('/(tabs)')}
+              className="w-full h-14 bg-[#137fec] rounded-xl flex-row items-center justify-center gap-2 shadow-lg shadow-blue-500/20">
               <Text className="text-white font-bold text-base">Log In</Text>
               <ArrowRight color="white" size={20} />
             </TouchableOpacity>
           </View>
 
           {/* Biometric */}
-          <View className="mt-8 flex-col items-center gap-6">
+          {/* <View className="mt-8 flex-col items-center gap-6">
             <View className="flex-row items-center w-full">
               <View className="flex-1 h-[1px] bg-slate-800" />
               <Text className="px-4 text-[10px] font-bold text-slate-500 uppercase">Or login with</Text>
@@ -110,7 +111,7 @@ export default function App() {
               </View>
               <Text className="text-xs font-medium text-slate-400">Face ID</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           {/* Bottom Actions */}
           <View className="mt-auto pt-10 pb-6 items-center gap-4">

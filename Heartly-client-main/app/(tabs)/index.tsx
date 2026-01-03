@@ -1,7 +1,6 @@
 import { HOSPITALS, HospitalItem } from '@/constants/hospitals';
 import { useRouter } from 'expo-router';
 import {
-  ArrowLeft,
   Bell,
   Bus,
   Car,
@@ -96,7 +95,7 @@ export default function HomeScreen() {
         {/* Top Nav */}
         <View className="flex-row items-center px-4 py-3 justify-between">
           <TouchableOpacity className="size-10 items-center justify-center rounded-full bg-white/5">
-            <ArrowLeft color="white" size={24} />
+            {/* <ArrowLeft color="white" size={24} /> */}
           </TouchableOpacity>
           <View className="items-center">
             <Text className="text-white text-lg font-bold">Find Care</Text>

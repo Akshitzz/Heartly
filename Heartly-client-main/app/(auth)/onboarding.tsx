@@ -39,22 +39,22 @@ export default function ProfileSetupScreen() {
                 <View className="flex-row items-center h-14 px-4 bg-[#1b2633] border border-gray-700 rounded-xl">
                     <TextInput
                         className="flex-1 text-white text-base"
-                        placeholder="e.g. Sarah Jenkins"
+                        placeholder="e.g. Akshita"
                         placeholderTextColor="#4b5563"
                     />
                 </View>
             </View>
 
             {/* Student ID & DOB Row */}
-            <View className="flex-row gap-4">
+            <View className="flex gap-4">
                 <View className="flex-1 gap-1.5">
-                    <Text className="text-sm font-medium text-gray-300">Student ID</Text>
+                    {/* <Text className="text-sm font-medium text-gray-300">Student ID</Text>
                     <TextInput
                         className="h-14 px-4 bg-[#1b2633] border border-gray-700 rounded-xl text-white"
                         placeholder="12345678"
                         placeholderTextColor="#4b5563"
                         keyboardType="number-pad"
-                    />
+                    /> */}
                 </View>
                 <View className="flex-1 gap-1.5">
                     <Text className="text-sm font-medium text-gray-300">Date of Birth</Text>
@@ -90,10 +90,10 @@ export default function ProfileSetupScreen() {
             <View className="gap-1.5">
                 <Text className="text-sm font-medium text-gray-300">Phone Number</Text>
                 <View className="flex-row items-center h-14 px-4 bg-[#1b2633] border border-gray-700 rounded-xl">
-                    <Text className="text-gray-500 mr-2">+1</Text>
+                    <Text className="text-gray-500 mr-2">+91</Text>
                     <TextInput
                         className="flex-1 text-white text-base"
-                        placeholder="(555) 123-4567"
+                        placeholder="Enter Phone Number"
                         placeholderTextColor="#4b5563"
                         keyboardType="phone-pad"
                     />
@@ -179,7 +179,7 @@ export default function ProfileSetupScreen() {
                     <User color="#64748b" size={20} className="mr-3" />
                     <TextInput
                         className="flex-1 text-white text-base"
-                        placeholder="e.g. John Doe (Father)"
+                        placeholder="e.g. Father/Mother Name"
                         placeholderTextColor="#4b5563"
                     />
                 </View>
@@ -203,10 +203,10 @@ export default function ProfileSetupScreen() {
                 <Text className="text-sm font-medium text-gray-300">Emergency Phone</Text>
                 <View className="flex-row items-center h-14 px-4 bg-[#1b2633] border border-gray-700 rounded-xl">
                     <Contact color="#64748b" size={20} className="mr-3" />
-                    <Text className="text-gray-500 mr-2">+1</Text>
+                    <Text className="text-gray-500 mr-2">+91</Text>
                     <TextInput
                         className="flex-1 text-white text-base"
-                        placeholder="(555) 999-9999"
+                        placeholder="Enter Emergency Phone Number"
                         placeholderTextColor="#4b5563"
                         keyboardType="phone-pad"
                     />

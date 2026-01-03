@@ -1,9 +1,10 @@
-import { ArrowRight, ChevronLeft, HeartPulse, Lock, Mail, Phone, User } from 'lucide-react-native';
+import { ArrowRight, ChevronLeft, Lock, Mail, Phone, User } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { router } from 'expo-router';
+import { Image } from 'react-native';
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
@@ -23,9 +24,9 @@ export default function Register() {
                         </TouchableOpacity>
                         <View className="flex-row items-center gap-2">
                             <View className="w-8 h-8 items-center justify-center rounded-lg bg-[#137fec]/20">
-                                <HeartPulse color="#137fec" size={18} />
+                                <Image source={require('../../assets/images/mainlogo.jpeg')} className="w-12 h-12 px-2  rounded-full" />
                             </View>
-                            <Text className="text-lg font-bold text-white">CampusHealth</Text>
+                            <Text className="text-lg font-bold text-white">Heartly</Text>
                         </View>
                         <View className="w-10" />
                     </View>
@@ -50,7 +51,7 @@ export default function Register() {
                                 <User color="#64748b" size={20} className="mr-3" />
                                 <TextInput
                                     className="flex-1 text-white text-base"
-                                    placeholder="John Doe"
+                                    placeholder="Enter Full Name"
                                     placeholderTextColor="#94a3b8"
                                 />
                             </View>
@@ -63,7 +64,7 @@ export default function Register() {
                                 <Mail color="#64748b" size={20} className="mr-3" />
                                 <TextInput
                                     className="flex-1 text-white text-base"
-                                    placeholder="student@university.edu"
+                                    placeholder="test@gmail.com"
                                     placeholderTextColor="#94a3b8"
                                     keyboardType="email-address"
                                 />
@@ -77,7 +78,7 @@ export default function Register() {
                                 <Phone color="#64748b" size={20} className="mr-3" />
                                 <TextInput
                                     className="flex-1 text-white text-base"
-                                    placeholder="+1 (555) 000-0000"
+                                    placeholder="+91 "
                                     placeholderTextColor="#94a3b8"
                                     keyboardType="phone-pad"
                                 />
