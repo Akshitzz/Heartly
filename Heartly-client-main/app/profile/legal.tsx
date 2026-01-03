@@ -11,6 +11,7 @@ import {
     Search,
     ShieldCheck,
 } from 'lucide-react-native';
+import { useColorScheme } from 'nativewind';
 import React, { useState } from 'react';
 import {
     ScrollView,
@@ -29,6 +30,7 @@ const LegalScreen = () => {
     const [activeTab, setActiveTab] = useState((tab as string) || 'terms');
     const [expandedIndex, setExpandedIndex] = useState(0);
     const router = useRouter();
+    const { colorScheme } = useColorScheme();
 
     const toggleAccordion = (index: number) => {
         setExpandedIndex(expandedIndex === index ? -1 : index);
@@ -57,7 +59,8 @@ const LegalScreen = () => {
                     <View className="flex-row h-10 w-full bg-slate-200 dark:bg-[#283039] rounded-lg p-1">
                         <TouchableOpacity
                             onPress={() => setActiveTab('terms')}
-                            className={`flex-1 items-center justify-center rounded-md ${activeTab === 'terms' ? 'bg-white dark:bg-[#111418] shadow-sm' : ''}`}
+                            className="flex-1 items-center justify-center rounded-md"
+                            style={activeTab === 'terms' ? { backgroundColor: colorScheme === 'dark' ? '#111418' : 'white', shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 2, elevation: 2 } : {}}
                         >
                             <Text className={`text-sm font-medium ${activeTab === 'terms' ? 'text-[#137fec]' : 'text-slate-500 dark:text-[#9dabb9]'}`}>
                                 Terms of Service
@@ -65,7 +68,8 @@ const LegalScreen = () => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => setActiveTab('privacy')}
-                            className={`flex-1 items-center justify-center rounded-md ${activeTab === 'privacy' ? 'bg-white dark:bg-[#111418] shadow-sm' : ''}`}
+                            className="flex-1 items-center justify-center rounded-md"
+                            style={activeTab === 'privacy' ? { backgroundColor: colorScheme === 'dark' ? '#111418' : 'white', shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 2, elevation: 2 } : {}}
                         >
                             <Text className={`text-sm font-medium ${activeTab === 'privacy' ? 'text-[#137fec]' : 'text-slate-500 dark:text-[#9dabb9]'}`}>
                                 Privacy Policy
@@ -98,47 +102,70 @@ const LegalScreen = () => {
 
                 {/* Legal Sections (Accordions) */}
                 <View className="px-4 gap-y-4">
-                    <AccordionItem
-                        index={0}
-                        expanded={expandedIndex === 0}
-                        onPress={() => toggleAccordion(0)}
-                        icon={<GraduationCap color="#137fec" size={18} />}
-                        title="1. Eligibility & Student ID"
-                        content="To use the Student Health Services, you must be a currently enrolled student. Verification requires a valid Student ID number. We reserve the right to suspend accounts that fail periodic eligibility checks."
-                    />
-                    <AccordionItem
-                        index={1}
-                        expanded={expandedIndex === 1}
-                        onPress={() => toggleAccordion(1)}
-                        icon={<CalendarX color="#137fec" size={18} />}
-                        title="2. Appointment Cancellations"
-                        content="Cancellations must be made at least 24 hours in advance. Failure to do so may result in a temporary hold on booking future appointments or a nominal fee charged to your student account."
-                    />
-                    <AccordionItem
-                        index={2}
-                        expanded={expandedIndex === 2}
-                        onPress={() => toggleAccordion(2)}
-                        icon={<AlertCircle color="#ef4444" size={18} />}
-                        title="3. Emergency Disclaimer"
-                        content="IF YOU HAVE A MEDICAL EMERGENCY, CALL 911 IMMEDIATELY. This app is not for emergency care. The chat and appointment features are for non-urgent student health matters only."
-                        isEmergency
-                    />
-                    <AccordionItem
-                        index={3}
-                        expanded={expandedIndex === 3}
-                        onPress={() => toggleAccordion(3)}
-                        icon={<ShieldCheck color="#137fec" size={18} />}
-                        title="4. User Conduct & Safety"
-                        content="Users agree to treat all healthcare providers and staff with respect. Harassment, abuse, or inappropriate behavior on the platform will result in immediate termination."
-                    />
-                    <AccordionItem
-                        index={4}
-                        expanded={expandedIndex === 4}
-                        onPress={() => toggleAccordion(4)}
-                        icon={<Lock color="#137fec" size={18} />}
-                        title="5. Data Privacy (HIPAA)"
-                        content="Your health data is protected under HIPAA and FERPA regulations. We do not sell your personal data. We only share necessary info with authorized labs and pharmacies."
-                    />
+                    {activeTab === 'terms' ? (
+                        <>
+                            <AccordionItem
+                                index={0}
+                                expanded={expandedIndex === 0}
+                                onPress={() => toggleAccordion(0)}
+                                icon={<GraduationCap color="#137fec" size={18} />}
+                                title="1. Eligibility & Student ID"
+                                content="To use the Student Health Services, you must be a currently enrolled student. Verification requires a valid Student ID number. We reserve the right to suspend accounts that fail periodic eligibility checks."
+                            />
+                            <AccordionItem
+                                index={1}
+                                expanded={expandedIndex === 1}
+                                onPress={() => toggleAccordion(1)}
+                                icon={<CalendarX color="#137fec" size={18} />}
+                                title="2. Appointment Cancellations"
+                                content="Cancellations must be made at least 24 hours in advance. Failure to do so may result in a temporary hold on booking future appointments or a nominal fee charged to your student account."
+                            />
+                            <AccordionItem
+                                index={2}
+                                expanded={expandedIndex === 2}
+                                onPress={() => toggleAccordion(2)}
+                                icon={<AlertCircle color="#ef4444" size={18} />}
+                                title="3. Emergency Disclaimer"
+                                content="IF YOU HAVE A MEDICAL EMERGENCY, CALL 911 IMMEDIATELY. This app is not for emergency care. The chat and appointment features are for non-urgent student health matters only."
+                                isEmergency
+                            />
+                            <AccordionItem
+                                index={3}
+                                expanded={expandedIndex === 3}
+                                onPress={() => toggleAccordion(3)}
+                                icon={<ShieldCheck color="#137fec" size={18} />}
+                                title="4. User Conduct & Safety"
+                                content="Users agree to treat all healthcare providers and staff with respect. Harassment, abuse, or inappropriate behavior on the platform will result in immediate termination."
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <AccordionItem
+                                index={4}
+                                expanded={expandedIndex === 4}
+                                onPress={() => toggleAccordion(4)}
+                                icon={<Lock color="#137fec" size={18} />}
+                                title="1. Data Privacy (HIPAA)"
+                                content="Your health data is protected under HIPAA and FERPA regulations. We do not sell your personal data. We only share necessary info with authorized labs and pharmacies."
+                            />
+                            <AccordionItem
+                                index={5}
+                                expanded={expandedIndex === 5}
+                                onPress={() => toggleAccordion(5)}
+                                icon={<ShieldCheck color="#137fec" size={18} />}
+                                title="2. Information Collection"
+                                content="We collect information that you provide directly to us, such as when you create an account, update your profile, or communicate with us. This includes your name, student ID, and medical history."
+                            />
+                            <AccordionItem
+                                index={6}
+                                expanded={expandedIndex === 6}
+                                onPress={() => toggleAccordion(6)}
+                                icon={<Lock color="#137fec" size={18} />}
+                                title="3. Data Security"
+                                content="We use industry-standard security measures to protect your personal information. However, no method of transmission over the Internet is 100% secure."
+                            />
+                        </>
+                    )}
 
                     <View className="items-center mt-4">
                         <Text className="text-slate-400 dark:text-[#9dabb9] text-xs text-center leading-5 px-6">

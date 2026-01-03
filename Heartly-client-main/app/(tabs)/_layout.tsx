@@ -12,24 +12,28 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarInactiveTintColor: Colors.dark.icon,
+        tabBarActiveTintColor: Colors.dark.tint,
         headerShown: false,
         tabBarButton: HapticTab,
+        tabBarStyle: {
+          backgroundColor: '#101922',
+          borderTopColor: 'transparent',
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: '',
+          title: 'Home',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
-      {/* <Tabs.Screen
+      <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          href: null,
         }}
-      /> */}
+      />
       <Tabs.Screen
         name="appointments"
         options={{

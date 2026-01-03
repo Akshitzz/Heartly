@@ -8,12 +8,12 @@ import {
 } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
-    SafeAreaView,
     StatusBar,
     Text,
     TouchableOpacity,
     View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function AppointmentsScreen() {
     const [activeTab, setActiveTab] = useState<'upcoming' | 'completed' | 'cancelled'>('upcoming');
